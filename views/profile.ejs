@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Threadify 💫</title>
+     <script src="https://cdn.tailwindcss.com"></script>
+     <style>
+    body {
+      background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .postcard {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
+      border-radius: 1rem;
+    }
+  </style>
+</head>
+<body class="text-white min-h-screen font-sans">
+
+    <!-- Navbar -->
+<header class="bg-black/60 backdrop-blur-md shadow-md p-5 flex justify-between items-center">
+  <div class="text-3xl font-bold tracking-tight">
+    <a href="/" class="text-white hover:text-cyan-400">Threadify 🧵<</a>
+  </div>
+  <nav class="space-x-6 text-sm font-medium">
+    <a href="/allposts" class="hover:underline text-gray-300">All Posts</a>
+    <a href="/profile" class="hover:underline text-gray-300">Profile</a>
+    <a href="/logout" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-md text-white">Logout</a>
+  </nav>
+</header>
+<main class="px-6 py-10 max-w-5xl mx-auto">
+    <!--User Info-->
+    
+        <div class="flex items-center gap-4 mb-8">
+            <div class="w-14 h-14 rounded-full overflow-hidden border-2 border-blue-900">
+                <img class="w-full h-full object-cover" src="/images/uploads/<%= user.profilepic %>" alt="profilepic">
+            </div>
+            <div>
+            <h3 class="text-2xl"><span class="text-cyan-400 font-semibold">Hello</span>, <%= user.name %> 😇 </h3>
+            <h5 class="text-sm text-gray-300 mt-1"> Start a new conversation thread below ⤵</h5>
+            </div>
+        </div>
+
+        <!-- New Post -->
+        <div class="glass p-6 rounded-xl mb-10 shadow-lg">
+        <form method ="post" action="/post">
+            <textarea 
+                placeholder="Whats on your mind..?" 
+                class="w-full p-4 rounded-md bg-zinc-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none min-h-[100px]" 
+                name="content"></textarea>
+            <button class="mt-4 px-6 py-2 rounded-md bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 transition font-semibold" type="Submit">
+                Create New post
+            </button>
+        </form>
+        </div>
+        
+        <!-- Posts -->
+        <section class="mt-12">
+            <h3 class="text-xl font-semibold mb-6 text-gray-300">Your Posts.</h3>
+            <div class="grid gap-6">
+                <% user.posts.reverse().forEach(function(post){ %>
+                    <div class="postcard p-5 text-smw-full max-xl break-words overflow-hidden">
+                        <h4 class="text-blue-500 mb-2">@<%= user.username %></h4>
+                        <p class="text-sm tracking-tight break-words whitespace-pre-line"><%= post.content %></p>
+                        <p class="text-xs text-gray-400 mb-2"><%= post.likes.length %> like<%= post.likes.length === 1 ? '' : 's' %></p>
+                        <div class=" flex gap-5 ">
+                            <a class="text-cyan-400 hover:underline" href="/like/<%= post._id %>">
+                                <%= post.likes.indexOf(user._id) === -1 ? "Like ❤️" : "UnLike💔" %>  
+                            </a>
+                            <a class="text-gray-500 hover:text-white" href="/edit/<%= post._id %>">Edit 🖊</a>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+    </div>
+       </section>
+</main>
+</body>
+</html>

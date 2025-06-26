@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Posts | Threadify</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+     <style>
+    body {
+      background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .postcard {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
+      border-radius: 1rem;
+    }
+  </style>
+</head>
+<body class="text-white font-sans">
+    <!-- Navbar -->
+  <nav class="w-full bg-black/50 shadow-lg px-6 py-4 flex justify-between items-center">
+  <div class="text-2xl font-bold tracking-tight">
+    <a href="/" class="hover:text-cyan-400">Threadify 🧵<</a>
+  </div>
+  <div class="space-x-6 text-sm">
+    <a href="/allposts" class="hover:text-blue-400">All Posts</a>
+    <a href="/profile" class="hover:text-blue-400">Profile</a>
+    <a href="/logout" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-md text-white transition">Logout</a>
+  </div>
+</nav>
+<!-- <div class="w-full min-h-screen bg-zinc-900 text-white p-10"> -->
+    <main class="max-w-7xl mx-auto px-6 py-10">
+        <div class="flex justify-between items-center mb-10">
+            <h1 class="text-3xl text-white font-semibold">📝 All Posts</h1>
+        </div>
+        
+        <!-- Posts -->
+        <div class="posts mt-10">
+            <% if (posts && posts.length > 0) { %>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <% posts.forEach(function(post) { %>
+                        <div class="postcard p-6 text-sm break-words shadow-md">
+                            <div class="flex items-center gap-4 mb-4">
+                                <div class="w-12 h-12 rounded-full overflow-hidden border-2 border-cyan-400">
+                                    <% if (post.user && post.user.profilepic) { %>
+                                        <img class="w-full h-full object-cover" src="/images/uploads/<%= post.user.profilepic %>" alt="profilepic">
+                                    <% } else { %>
+                                        <div class="bg-zinc-700 w-full h-full flex items-center justify-center text-xs">N/A</div>
+                                    <% } %>
+                                </div>
+                                <div>
+                                    <h4 class="text-cyan-400 font-semibold">@<%= post.user?.username || 'unknown' %></h4>
+                                    <p class="text-sm text-gray-300"><%= post.user?.name || 'Unknown User' %></p>
+                                </div>
+                            </div>
+                            <p class="text-sm tracking-tight text-white whitespace-pre-wrap mb-2"><%= post.content %></p>
+                            <small class="mt-2 inline-block text-zinc-500 text-gray-400 block mb-3"><%= post.likes.length %> like<%= post.likes.length !== 1 ? 's' : '' %></small>
+                            <div class="btns flex gap-4 mt-2">
+                                <a class="text-blue-400 text-sm hover:underline" href="/post/<%= post._id %>">View Post 🔍</a>
+                                <% if (user && post.user && post.user._id.toString() === user._id.toString()) { %>
+                                    <a class="text-zinc-400 text-sm hover:underline" href="/edit/<%= post._id %>">Edit 🖊</a>
+                                <% } %>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+            <% } else { %>
+                <p class="text-gray-400 text-center col-span-3 mt-10">No posts available.</p>
+            <% } %>
+        </div>
+
+        <div class="mt-12 text-center">
+            <a href="/" class="text-blue-400 hover:underline text-sm">← Back to Home</a>
+        </div>
+    </div>
+    </main>
+</body>
+</html>

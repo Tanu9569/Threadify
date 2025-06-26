@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Post</title>
+     <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-gradient-to-tr from-indigo-700 via-purple-800 to-pink-700 text-white font-sans">
+  <!-- Navbar -->
+  <nav class="flex justify-between items-center px-6 py-4 bg-black/60 backdrop-blur-md shadow-md text-white">
+  <div class="text-2xl font-bold tracking-wide">
+    <a href="/" class="hover:text-cyan-400">Threadify 🧵<</a>
+  </div>
+  <div class="space-x-5 text-sm">
+    <a href="/allposts" class="hover:text-cyan-400">All Posts</a>
+    <a href="/profile" class="hover:text-cyan-400">Profile</a>
+    <a href="/logout" class="hover:text-cyan-400">Logout</a>
+  </div>
+</nav>
+    <section class="flex items-center justify-center py-20 px-4">
+    <div class="bg-white/10 p-10 rounded-2xl w-full max-w-lg backdrop-blur-md shadow-lg">
+        <h5 class="text-3xl font-semibold text-center text-yellow-300 mb-6"> Edit your post</h5>
+
+        <form method ="post" action="/update/<%= post._id %>" class="space-y-5">
+            <textarea 
+              placeholder="Whats on your mind..?" 
+              class="w-full min-h-[120px] p-4 rounded-md bg-white/10 text-white placeholder-zinc-300 border border-zinc-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 resize-none" 
+              name="content"><%= post.content %></textarea>
+            <button 
+                class="w-full py-3 bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-black font-semibold rounded-md shadow-md transition" 
+                type="Submit" >✅ Update Your Post</button>
+        </form>
+    </div>
+    </section>
+</body>
+</html>
