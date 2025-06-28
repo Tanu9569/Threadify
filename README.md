@@ -91,7 +91,7 @@ bash
 Copy
 Edit
 npm install
-Set up MongoDB:
+Set up MongoDB: 
 
 Ensure MongoDB is running locally or connect to MongoDB Atlas.
 
